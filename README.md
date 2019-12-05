@@ -2,7 +2,7 @@ HTTP request/response tracer middleware
 ---
 
 The `Trace` middleware that keeps request copy and response records in context.
-This middleware can be used to record API requests and responses in the database. 
+For example, this middleware can be used to record API requests and responses in the database. 
 It is also useful when there is no HTTP request in the controller and 
 only context can be obtained due to limitations of frameworks such as [Goa](https://goa.design).
 
