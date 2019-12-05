@@ -2,31 +2,28 @@ package tracer
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 )
 
-type constKey int
-
-// TrackerKey is the request context key used to store the tracking data.
-const TrackerKey constKey = iota + 1
-
-// Trace traces http requests and responses.
-func Trace(h http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			tracker := NewTracker(w, r)
-			ctx := r.Context()
-			ctx = context.WithValue(ctx, TrackerKey, tracker)
-			h.ServeHTTP(tracker, r.WithContext(ctx))
-		})
-}
-
 // RequestRecorder reads http request and records it's body.
 type RequestRecorder struct {
 	*http.Request
 	Payload json.RawMessage
+}
+
+// RequestRecorder returns copied request.
+func NewRequestRecorder(r *http.Request) RequestRecorder {
+	b, err := ioutil.ReadAll(r.Body)
+	if err == nil {
+		_ = r.Body.Close()
+		r.Body = ioutil.NopCloser(bytes.NewReader(b))
+	}
+	return RequestRecorder{
+		Request: r,
+		Payload: b,
+	}
 }
 
 // ResponseRecorder records response status, body and error code.
@@ -53,16 +50,8 @@ type Tracker struct {
 
 // NewTracker creates http.ResponseWrite that records request and response.
 func NewTracker(w http.ResponseWriter, r *http.Request) *Tracker {
-	b, err := ioutil.ReadAll(r.Body)
-	if err == nil {
-		_ = r.Body.Close()
-		r.Body = ioutil.NopCloser(bytes.NewReader(b))
-	}
 	return &Tracker{
-		Request: RequestRecorder{
-			Request: r,
-			Payload: b,
-		},
+		Request:        NewRequestRecorder(r),
 		ResponseWriter: w,
 	}
 }
