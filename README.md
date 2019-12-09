@@ -8,7 +8,7 @@ only context can be obtained due to limitations of frameworks such as [Goa](http
 
 If you do not need to record responses, you can use `RecordRequest` middleware.
 
-|Middleware| Targets| Context Key| Object |
+|Middleware| Targets| Context Key| Context object |
 |:---|:---|:---|:---|
 |Trace| Request and Response| TrackerKey | Tracker |
 |RecordRequest| Request| RequestRecorderKey| RequestRecorder|
