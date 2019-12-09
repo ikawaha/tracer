@@ -30,8 +30,7 @@ func (s *calcsrvc) Add(ctx context.Context, p *calc.AddPayload) (res int, err er
 }
 ```
 
-# Blog
-http://ikawaha.hateblo.jp/entry/2019/12/05/235917
+**Blog**: http://ikawaha.hateblo.jp/entry/2019/12/05/235917
 
 ___
 
