@@ -34,6 +34,8 @@ type ResponseRecorder struct {
 	Status int
 	// Body is the response body
 	Body bytes.Buffer
+	// Discard response body if true
+	Discard bool
 }
 
 // Tracker implements http.ResponsWriter
@@ -56,6 +58,18 @@ func NewTracker(w http.ResponseWriter, r *http.Request) *Tracker {
 	}
 }
 
+// NewTrackerDiscardResponseBody creates http.ResponseWrite that records request and response,
+// but discards response body.
+func NewTrackerDiscardResponseBody(w http.ResponseWriter, r *http.Request) *Tracker {
+	return &Tracker{
+		Request: NewRequestRecorder(r),
+		Response: ResponseRecorder{
+			Discard: true,
+		},
+		ResponseWriter: w,
+	}
+}
+
 // Written returns true if the response was written, false otherwise.
 func (r *Tracker) Written() bool {
 	return r.Response.Status != 0
@@ -72,6 +86,8 @@ func (r *Tracker) Write(b []byte) (int, error) {
 	if !r.Written() {
 		r.WriteHeader(http.StatusOK)
 	}
-	r.Response.Body.Write(b)
+	if !r.Response.Discard {
+		r.Response.Body.Write(b)
+	}
 	return r.ResponseWriter.Write(b)
 }

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ikawaha/tracer.svg?branch=master)](https://travis-ci.org/ikawaha/tracer)
+
 HTTP request/response tracer middleware
 ---
 
@@ -8,10 +10,10 @@ only context can be obtained due to limitations of frameworks such as [Goa](http
 
 If you do not need to record responses, you can use `RecordRequest` middleware.
 
-|Middleware| Targets| Context Key| Context object |
-|:---|:---|:---|:---|
-|Trace| Request and Response| TrackerKey | Tracker |
-|RecordRequest| Request| RequestRecorderKey| RequestRecorder|
+|Middleware| Targets| Context Key| Context Object | Option |
+|:---|:---|:---|:---|:---|
+|Trace| Request and Response| TrackerKey | Tracker | DiscardResponseBody |
+|RecordRequest| Request| RequestRecorderKey| RequestRecorder||
 
 
 ### Example
