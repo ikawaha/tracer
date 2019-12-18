@@ -10,7 +10,7 @@ only context can be obtained due to limitations of frameworks such as [Goa](http
 
 If you do not need to record responses, you can use `RecordRequest` middleware.
 
-|Middleware| Targets| Context Key| Object | Option |
+|Middleware| Targets| Context Key| Context Object | Option |
 |:---|:---|:---|:---|:---|
 |Trace| Request and Response| TrackerKey | Tracker | DiscardResponseBody |
 |RecordRequest| Request| RequestRecorderKey| RequestRecorder||
@@ -31,6 +31,8 @@ func (s *calcsrvc) Add(ctx context.Context, p *calc.AddPayload) (res int, err er
 	return p.A + p.B, nil
 }
 ```
+
+**Blog**: http://ikawaha.hateblo.jp/entry/2019/12/05/235917
 
 ___
 
