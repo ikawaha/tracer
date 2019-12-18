@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ikawaha/tracer.svg?branch=master)](https://travis-ci.org/ikawaha/tracer)
+
 HTTP request/response tracer middleware
 ---
 
