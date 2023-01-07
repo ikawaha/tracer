@@ -17,7 +17,7 @@ func TestCalcsrvc_Add(t *testing.T) {
 	logger := log.New(&b, "", log.LstdFlags)
 
 	checker := goahttpcheck.New()
-	checker.Use(tracer.Trace)
+	checker.Use(tracer.Trace())
 
 	checker.Mount(
 		server.NewAddHandler,

@@ -1,3 +1,3 @@
 module github.com/ikawaha/tracer
 
-go 1.13
+go 1.19
