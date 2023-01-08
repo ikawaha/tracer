@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	calc "calc/gen/calc"
+	"calc/gen/calc"
 	"github.com/ikawaha/tracer"
 )
 
