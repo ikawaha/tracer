@@ -1,12 +1,6 @@
 run:
-  skip-dirs:
-    - tool
 issues:
   exclude-use-default: false
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - gocyclo
 
 linters:
   enable:
@@ -31,7 +25,7 @@ linters-settings:
   gocyclo:
     min-complexity: 15
   errcheck:
-    ignore: fmt:.*,io/ioutil:^Read,^Close|^Write|^Shutdown
+    ignore: fmt:.*,io:^Read,^Close|^Write|^Shutdown
   revive:
     severity: warning
     confidence: 0.8
