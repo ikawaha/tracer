@@ -70,7 +70,7 @@ func TestTracerMiddleware(t *testing.T) {
 		ts := httptest.NewServer(handler)
 		defer ts.Close()
 
-		req, err := http.NewRequest("POST", ts.URL+"/hello", nil)
+		req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, ts.URL+"/hello", nil)
 		if err != nil {
 			t.Fatalf("unexpected error, %v", err)
 		}
@@ -84,6 +84,7 @@ func TestTracerMiddleware(t *testing.T) {
 		if err != nil {
 			t.Fatalf("unexpected error, %v", err)
 		}
+		defer resp.Body.Close()
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("expected OK, got %v", resp.Status)
 		}
@@ -98,7 +99,7 @@ func TestTracerMiddleware(t *testing.T) {
 		ts := httptest.NewServer(handler)
 		defer ts.Close()
 
-		req, err := http.NewRequest("POST", ts.URL+"/hello", nil)
+		req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, ts.URL+"/hello", nil)
 		if err != nil {
 			t.Fatalf("unexpected error, %v", err)
 		}
@@ -112,6 +113,7 @@ func TestTracerMiddleware(t *testing.T) {
 		if err != nil {
 			t.Fatalf("unexpected error, %v", err)
 		}
+		defer resp.Body.Close()
 		if resp.StatusCode != http.StatusOK {
 			t.Errorf("expected OK, got %v", resp.Status)
 		}
@@ -136,7 +138,7 @@ func TestTracerMiddlewareDiscardBody(t *testing.T) {
 	ts := httptest.NewServer(handler)
 	defer ts.Close()
 
-	req, err := http.NewRequest("POST", ts.URL+"/hello", nil)
+	req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, ts.URL+"/hello", nil)
 	if err != nil {
 		t.Fatalf("unexpected error, %v", err)
 	}
@@ -150,6 +152,7 @@ func TestTracerMiddlewareDiscardBody(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error, %v", err)
 	}
+	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("expected OK, got %v", resp.Status)
 	}
@@ -190,7 +193,7 @@ func TestRecordRequest(t *testing.T) {
 	ts := httptest.NewServer(handler)
 	defer ts.Close()
 
-	req, err := http.NewRequest("POST", ts.URL+"/hello", nil)
+	req, err := http.NewRequestWithContext(context.TODO(), http.MethodPost, ts.URL+"/hello", nil)
 	if err != nil {
 		t.Fatalf("unexpected error, %v", err)
 	}
@@ -204,6 +207,7 @@ func TestRecordRequest(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unexpected error, %v", err)
 	}
+	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("expected OK, got %v", resp.Status)
 	}
