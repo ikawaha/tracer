@@ -3,7 +3,7 @@ package tracer
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -15,10 +15,10 @@ type RequestRecorder struct {
 
 // RequestRecorder returns copied request.
 func NewRequestRecorder(r *http.Request) RequestRecorder {
-	b, err := ioutil.ReadAll(r.Body)
+	b, err := io.ReadAll(r.Body)
 	if err == nil {
 		_ = r.Body.Close()
-		r.Body = ioutil.NopCloser(bytes.NewReader(b))
+		r.Body = io.NopCloser(bytes.NewReader(b))
 	}
 	return RequestRecorder{
 		Request: r,
