@@ -9,7 +9,12 @@ on:
 
 jobs:
   test:
-    runs-on: ${{ ubuntu-latest }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v3
@@ -19,7 +24,11 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
+
+      - name: Build
+        run: go build -v ./...
+
       - name: Test
         run: |
           go test -v ./...
-          cd example; go test -v ./...; cd .. 
+
