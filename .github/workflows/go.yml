@@ -24,11 +24,7 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
-
-      - name: Build
-        run: go build -v ./...
-
       - name: Test
         run: |
           go test -v ./...
-
+          cd example; go test -v ./...; cd ..
